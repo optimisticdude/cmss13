@@ -402,8 +402,12 @@
 // From /mob/proc/stop_pulling()
 #define COMSIG_MOB_STOPPED_PULLING "mob_stopped_pulling"
 
-/// From obj/limb/groin/reapply_integrity_effects()
+/// From /datum/internal_organ/liver/on_malfunction()
 #define COMSIG_MOB_INGESTION "mob_ingestion"
+
+/// From /datum/internal_organ/kidneys/on_break()
+#define COMSIG_MOB_NEGATE_PAIN_REDUCTION "mob_pain_process"
+	#define COMPONENT_NEGATE_PAIN_REDUCTION (1<<0)
 
 /// From obj/limb/head/reapply_integrity_effects()
 #define COMSIG_MOB_PRE_ITEM_ZOOM "mob_pre_item_zoom"
@@ -459,3 +463,4 @@
 #define COMSIG_LIMB_SUTURE_CHECK "limb_suture_check"
 // Sent to remove all sutures.
 #define COMSIG_LIMB_REMOVE_SUTURES "limb_clear_sutures"
+

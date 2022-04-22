@@ -172,7 +172,11 @@
 	if(!..())
 		return
 
-	M.pain.apply_pain_reduction(PAIN_REDUCTION_MULTIPLIER * potency)
+	var/applied_pain_reduction = PAIN_REDUCTION_MULTIPLIER * potency
+	if(SEND_SIGNAL(M, COMSIG_MOB_NEGATE_PAIN_REDUCTION) & COMPONENT_NEGATE_PAIN_REDUCTION)
+		applied_pain_reduction = 0
+
+	M.pain.apply_pain_reduction(applied_pain_reduction)
 	M.hallucination = max(M.hallucination, potency) //Hallucinations and tox damage
 	M.apply_damage(0.5 *  potency * delta_time, TOX)
 
@@ -706,7 +710,11 @@
 	if(!..())
 		return
 
-	M.pain.apply_pain_reduction(PAIN_REDUCTION_MULTIPLIER * potency)
+	var/applied_pain_reduction = PAIN_REDUCTION_MULTIPLIER * potency
+	if(SEND_SIGNAL(M, COMSIG_MOB_NEGATE_PAIN_REDUCTION) & COMPONENT_NEGATE_PAIN_REDUCTION)
+		applied_pain_reduction = 0
+
+	M.pain.apply_pain_reduction(applied_pain_reduction)
 
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath - 2.5 * potency * delta_time)

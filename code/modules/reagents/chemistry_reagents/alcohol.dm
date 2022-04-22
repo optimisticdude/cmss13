@@ -46,7 +46,11 @@
 	for(var/datum/reagent/ethanol/A in holder.reagent_list)
 		if(A.booze_data) d += A.booze_data
 
-	M.pain.apply_pain_reduction(max(d*-0.16, PAIN_REDUCTION_HEAVY)) // Max reduction at d=250, between slurring and confusion, helps slightly less than tramadol.
+	var/applied_pain_reduction = max(d*-0.16, PAIN_REDUCTION_HEAVY)
+	if(SEND_SIGNAL(M, COMSIG_MOB_NEGATE_PAIN_REDUCTION) & COMPONENT_NEGATE_PAIN_REDUCTION)
+		applied_pain_reduction = 0
+
+	M.pain.apply_pain_reduction(applied_pain_reduction) // Max reduction at d=250, between slurring and confusion, helps slightly less than tramadol.
 
 	M.dizziness += dizzy_adj
 	if(d >= slur_start)

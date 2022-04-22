@@ -23,8 +23,16 @@
 		to_chat(owner, SPAN_DANGER("Adrenaline puppets you for a little longer, but your wounds are nearing critical limits; no shock will patch you if you fail now!"))
 		burn_multiplier = 1.65
 
+	else
+		if(APPLY_INTEGRITY_INCREASE_EFFECT(LIMB_INTEGRITY_CONCERNING))
+			to_chat(owner, SPAN_DANGER("You feel tendons and flesh tear throughout your body, you definitely should take better care of yourself in combat!"))
+			owner.int_dmg_malus = 1.25
+
 /obj/limb/chest/on_integrity_tier_lowered(old_level)
 	..()
+	if(APPLY_INTEGRITY_DECREASE_EFFECT(LIMB_INTEGRITY_CONCERNING))
+		owner.int_dmg_malus = 1
+
 	if(APPLY_INTEGRITY_DECREASE_EFFECT(LIMB_INTEGRITY_SERIOUS))
 		burn_multiplier = 1
 

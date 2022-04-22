@@ -328,7 +328,11 @@
 	if(!..())
 		return
 
-	M.pain.apply_pain_reduction(PAIN_REDUCTION_MULTIPLIER * potency) //Endorphins are natural painkillers
+	var/applied_pain_reduction = PAIN_REDUCTION_MULTIPLIER * potency
+	if(SEND_SIGNAL(M, COMSIG_MOB_NEGATE_PAIN_REDUCTION) & COMPONENT_NEGATE_PAIN_REDUCTION)
+		applied_pain_reduction = 0
+
+	M.pain.apply_pain_reduction(applied_pain_reduction) //Endorphins are natural painkillers
 	if(prob(2.5 * potency * delta_time))
 		M.emote(pick("laugh","giggle","chuckle","grin","smile","twitch"))
 

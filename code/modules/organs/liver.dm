@@ -3,7 +3,7 @@
 	removed_type = /obj/item/organ/liver
 	robotic_type = /obj/item/organ/liver/prosthetic
 	min_bruised_integrity = LIMB_INTEGRITY_SERIOUS
-	min_broken_integrity = LIMB_INTEGRITY_NONE
+	min_broken_integrity = LIMB_INTEGRITY_CRITICAL
 	organ_tag = ORGAN_LIVER
 
 /datum/internal_organ/liver/on_malfunction(trait_source)
