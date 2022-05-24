@@ -111,8 +111,10 @@
 
 /obj/item/stack/medical/proc/remove_from_limb(destroy = FALSE)
 	forceMove(get_turf(located_limb))
-
 	handle_item_removal(src, located_limb)
+	if(affecting.status & (LIMB_ROBOT|LIMB_SYNTHSKIN))
+		to_chat(user, SPAN_WARNING("This isn't useful at all on a robotic limb."))
+		return 1
 
 	if(destroy)
 		qdel(src)

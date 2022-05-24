@@ -61,6 +61,7 @@
 	var/reagent_tag                 //Used for metabolizing reagents.
 
 	var/darksight = 2
+	var/default_lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	var/brute_mod = null    // Physical damage reduction/malus.
 	var/burn_mod = null     // Burn damage reduction/malus.
@@ -234,7 +235,7 @@
 		H.internal_organs_by_name[organ] = new organ_type(H)
 
 	if(flags & IS_SYNTHETIC)
-		C.robotize() //Also gets all other limbs, as those are attached.
+		C.robotize(synth_skin = TRUE) //Also gets all other limbs, as those are attached.
 		for(var/datum/internal_organ/I in H.internal_organs)
 			I.mechanize()
 
@@ -469,3 +470,6 @@
 			return 1
 
 	return 0
+
+/datum/species/proc/get_hairstyle(var/style)
+	return GLOB.hair_styles_list[style]

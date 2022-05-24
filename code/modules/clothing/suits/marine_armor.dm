@@ -404,12 +404,13 @@ var/list/squad_colors_chat = list(rgb(230,125,125), rgb(255,230,80), rgb(255,150
 //Making a new object because we might want to edit armor values and such.
 //Or give it its own sprite. It's more for the future.
 /obj/item/clothing/suit/storage/marine/MP/CO
+	name = "\improper M3 pattern captain armor"
+	desc = "A robust, well-polished suit of armor for the Commanding Officer. Custom-made to fit its owner with special straps to operate a smartgun. Show those Marines who's really in charge."
 	icon_state = "co_officer"
 	item_state = "co_officer"
-	name = "\improper M3 pattern captain armor"
-	desc = "A robust, well-polished suit of armor for the Commanding Officer. Custom-made to fit its owner. Show those Marines who's really in charge."
 	uniform_restricted = list(/obj/item/clothing/under/marine/officer, /obj/item/clothing/under/rank/ro_suit)
 	flags_atom = NO_SNOW_TYPE
+	flags_inventory = SMARTGUN_HARNESS
 	armor_bullet = CLOTHING_ARMOR_HIGH
 	storage_slots = 3
 	specialty = "M3 pattern captain"
@@ -553,7 +554,7 @@ var/list/squad_colors_chat = list(rgb(230,125,125), rgb(255,230,80), rgb(255,150
 	armor_bullet = CLOTHING_ARMOR_HIGH
 	armor_laser = CLOTHING_ARMOR_MEDIUMLOW
 	armor_bomb = CLOTHING_ARMOR_MEDIUMHIGH
-	armor_bio = CLOTHING_ARMOR_MEDIUMLOW
+	armor_bio = CLOTHING_ARMOR_HIGH
 	armor_rad = CLOTHING_ARMOR_MEDIUMHIGH
 	armor_internaldamage = CLOTHING_ARMOR_MEDIUMHIGH
 	storage_slots = 2
@@ -845,7 +846,6 @@ var/list/squad_colors_chat = list(rgb(230,125,125), rgb(255,230,80), rgb(255,150
 	var/camouflage_break = 5 SECONDS
 	var/camouflage_enter_delay = 4 SECONDS
 	var/aiming_time = 1.25 SECONDS
-	var/datum/event_handler/ghillie_movement/ghillie_movement
 
 	var/aimed_shot_cooldown
 	var/aimed_shot_cooldown_delay = 2.5 SECONDS
@@ -899,14 +899,12 @@ var/list/squad_colors_chat = list(rgb(230,125,125), rgb(255,230,80), rgb(255,150
 		COMSIG_HUMAN_EXTINGUISH
 	), .proc/deactivate_camouflage)
 	RegisterSignal(H, COMSIG_MOB_POST_UPDATE_CANMOVE, .proc/fix_density)
-	ghillie_movement = new /datum/event_handler/ghillie_movement()
-	ghillie_movement.gs = src
 	camo_active = TRUE
 	H.alpha = full_camo_alpha
 	H.FF_hit_evade = 1000
 	H.density = FALSE
 
-	H.add_movement_handler(ghillie_movement)
+	RegisterSignal(H, COMSIG_MOB_MOVE_OR_LOOK, .proc/handle_mob_move_or_look)
 
 	var/datum/mob_hud/security/advanced/SA = huds[MOB_HUD_SECURITY_ADVANCED]
 	SA.remove_from_hud(H)
@@ -930,13 +928,13 @@ var/list/squad_colors_chat = list(rgb(230,125,125), rgb(255,230,80), rgb(255,150
 		COMSIG_MOB_FIRED_GUN_ATTACHMENT,
 		COMSIG_MOB_DEATH,
 		COMSIG_MOB_POST_UPDATE_CANMOVE,
-		COMSIG_HUMAN_EXTINGUISH
+		COMSIG_HUMAN_EXTINGUISH,
+		COMSIG_MOB_MOVE_OR_LOOK
 	))
 
 	camo_active = FALSE
 	animate(H, alpha = initial(H.alpha), flags = ANIMATION_END_NOW)
 	H.FF_hit_evade = initial(H.FF_hit_evade)
-	H.remove_movement_handler(ghillie_movement)
 	if(!H.lying)
 		H.density = TRUE
 	H.update_canmove()
@@ -970,13 +968,11 @@ var/list/squad_colors_chat = list(rgb(230,125,125), rgb(255,230,80), rgb(255,150
 		animate(H, alpha = full_camo_alpha)
 		current_camo = full_camo_alpha
 
+/obj/item/clothing/suit/storage/marine/ghillie/proc/handle_mob_move_or_look(mob/living/mover, var/actually_moving, var/direction, var/specific_direction)
+	SIGNAL_HANDLER
 
-/datum/event_handler/ghillie_movement
-	var/obj/item/clothing/suit/storage/marine/ghillie/gs
-	handle(mob/living/sender, datum/event_args/mob_movement/ev_args)
-		if(gs.camo_active && ev_args.moving)
-			gs.deactivate_camouflage(sender)
-			ev_args.continue_movement = TRUE
+	if(camo_active && actually_moving)
+		deactivate_camouflage(mover)
 
 /datum/action/item_action/specialist/prepare_position
 	ability_primacy = SPEC_PRIMARY_ACTION_1

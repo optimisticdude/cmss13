@@ -174,6 +174,10 @@
 	new	/obj/item/tool/surgery/surgical_line(src)
 	new	/obj/item/tool/surgery/synthgraft(src)
 
+/obj/item/storage/belt/medical/examine()
+	..()
+	to_chat(usr, SPAN_NOTICE("The belt is currently set to [mode ? "take pills directly from bottles": "NOT take pills directly from bottles"]."))
+
 /obj/item/storage/belt/medical/lifesaver
 	name = "\improper M276 pattern lifesaver bag"
 	desc = "The M276 is the standard load-bearing equipment of the USCM. This configuration mounts a duffel bag filled with a range of injectors and light medical supplies, and is common among medics. \nRight click its sprite and click \"toggle belt mode\" to take pills out of bottles by simply clicking them."
@@ -507,6 +511,11 @@
 /obj/item/storage/belt/shotgun/full/fill_preset_inventory()
 	for(var/i = 1 to storage_slots)
 		new /obj/item/ammo_magazine/handful/shotgun/slug(src)
+
+/obj/item/storage/belt/shotgun/full/random/fill_preset_inventory()
+	for(var/i = 1 to storage_slots)
+		var/random_shell_type = pick(shotgun_shells_12g)
+		new random_shell_type(src)
 
 /obj/item/storage/belt/shotgun/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/ammo_magazine/shotgun))

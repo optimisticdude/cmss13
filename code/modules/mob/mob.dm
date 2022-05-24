@@ -223,7 +223,7 @@
 		return 1
 	return 0
 
-//This is a SAFE proc. Use this instead of equip_to_splot()!
+//This is a SAFE proc. Use this instead of equip_to_slot()!
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
@@ -341,16 +341,19 @@
 
 /mob/proc/point_to_atom(atom/A, turf/T)
 	//Squad Leaders and above have reduced cooldown and get a bigger arrow
-	if(!skillcheck(src, SKILL_LEADERSHIP, SKILL_LEAD_TRAINED))
-		recently_pointed_to = world.time + 50
-		new /obj/effect/overlay/temp/point(T, src)
-
-	else
+	if(check_improved_pointing())
 		recently_pointed_to = world.time + 10
 		new /obj/effect/overlay/temp/point/big(T, src)
+	else
+		recently_pointed_to = world.time + 50
+		new /obj/effect/overlay/temp/point(T, src)
 	visible_message("<b>[src]</b> points to [A]", null, null, 5)
-	return 1
+	return TRUE
 
+///Is this mob important enough to point with big arrows?
+/mob/proc/check_improved_pointing()
+	if(HAS_TRAIT(src, TRAIT_LEADERSHIP))
+		return TRUE
 
 /mob/proc/update_flavor_text()
 	set src in usr
@@ -690,31 +693,26 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	return canmove
 
-/mob/proc/facedir(var/ndir)
+/mob/proc/facedir(var/ndir, var/specific_dir)
 	if(!canface())	return 0
-	var/newdir = FALSE
 	if(dir != ndir)
 		flags_atom &= ~DIRLOCK
 		setDir(ndir)
-		newdir = TRUE
 	if(buckled && !buckled.anchored)
 		buckled.setDir(ndir)
 		buckled.handle_rotation()
-	var/mob/living/mliv = src
-	if(istype(mliv))
-		if(newdir)
-			mliv.on_movement(0)
 
 	if(back && (back.flags_item & ITEM_OVERRIDE_NORTHFACE))
 		update_inv_back()
 
-	return 1
+	SEND_SIGNAL(src, COMSIG_MOB_MOVE_OR_LOOK, FALSE, dir, specific_dir)
 
+	return TRUE
 
 /mob/proc/set_face_dir(var/newdir)
 	if(newdir == dir && flags_atom & DIRLOCK)
 		flags_atom &= ~DIRLOCK
-	else if ( facedir(newdir) )
+	else if(facedir(newdir))
 		flags_atom |= DIRLOCK
 
 
@@ -834,9 +832,16 @@ mob/proc/yank_out_object()
 		affected.take_damage((selection.w_class * 3), 0, 0, "Embedded object extraction")
 		H.pain.apply_pain(selection.w_class * 3)
 
+<<<<<<< HEAD
 		if(prob(selection.w_class * 5) && !(affected.status & LIMB_ROBOT))
 			//var/datum/wound/internal_bleeding/I = new (0)
 
+=======
+		if(prob(selection.w_class * 5) && !(affected.status & (LIMB_ROBOT|LIMB_SYNTHSKIN)))
+			var/datum/wound/internal_bleeding/I = new (0)
+			affected.add_bleeding(I, TRUE)
+			affected.wounds += I
+>>>>>>> b0d6b9abaa06ae4502dcc1a259d726ba2bef94b8
 			H.custom_pain("Something tears wetly in your [affected] as [selection] is pulled free!", 1)
 
 	selection.forceMove(get_turf(src))
@@ -1045,6 +1050,7 @@ mob/proc/yank_out_object()
 
 	. += "<option value='?_src_=vars;gib=\ref[src]'>Gib</option>"
 
+<<<<<<< HEAD
 /mob/proc/stop_pulling()
 	if(pulling)
 		var/mob/M = pulling
@@ -1069,3 +1075,13 @@ mob/proc/yank_out_object()
 			M.update_canmove()
 
 		SEND_SIGNAL(src, COMSIG_MOB_STOPPED_PULLING, M)
+=======
+/mob/Topic(href, href_list)
+	. = ..()
+	if(.)
+		return
+	if(href_list["preference"])
+		if(client)
+			client.prefs.process_link(src, href_list)
+		return TRUE
+>>>>>>> b0d6b9abaa06ae4502dcc1a259d726ba2bef94b8

@@ -252,6 +252,9 @@
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
+	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=[WEAR_JACKET]'>[(wear_suit ? wear_suit : "Nothing")]</A>
+	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=[WEAR_J_STORE]'>[(s_store ? s_store : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/tank) && !( internal )) ? " <A href='?src=\ref[src];internal=1'>Set Internal</A>" : "")]
+	<BR><B>Back:</B> <A href='?src=\ref[src];item=[WEAR_BACK]'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank) && !( internal )) ? " <A href='?src=\ref[src];internal=1'>Set Internal</A>" : "")]
 	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=[WEAR_FACE]'>[(wear_mask ? wear_mask : "Nothing")]</A>
 	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[WEAR_L_HAND]'>[(l_hand ? l_hand  : "Nothing")]</A>
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[WEAR_R_HAND]'>[(r_hand ? r_hand : "Nothing")]</A>
@@ -263,10 +266,7 @@
 	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=[WEAR_FEET]'>[(shoes ? shoes : "Nothing")]</A>
 	<BR><B>Belt:</B> <A href='?src=\ref[src];item=[WEAR_WAIST]'>[(belt ? belt : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(belt, /obj/item/tank) && !internal) ? " <A href='?src=\ref[src];internal=1'>Set Internal</A>" : "")]
 	<BR><B>Uniform:</B> <A href='?src=\ref[src];item=[WEAR_BODY]'>[(w_uniform ? w_uniform : "Nothing")]</A> [(suit) ? ((suit.has_sensor == UNIFORM_HAS_SENSORS) ? " <A href='?src=\ref[src];sensor=1'>Sensors</A>" : "") : null]
-	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=[WEAR_JACKET]'>[(wear_suit ? wear_suit : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=[WEAR_BACK]'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank) && !( internal )) ? " <A href='?src=\ref[src];internal=1'>Set Internal</A>" : "")]
 	<BR><B>ID:</B> <A href='?src=\ref[src];item=[WEAR_ID]'>[(wear_id ? wear_id : "Nothing")]</A>
-	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=[WEAR_J_STORE]'>[(s_store ? s_store : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/tank) && !( internal )) ? " <A href='?src=\ref[src];internal=1'>Set Internal</A>" : "")]
 	<BR><B>Left Pocket:</B> <A href='?src=\ref[src];item=[WEAR_L_STORE]'>[(l_store ? l_store : "Nothing")]</A>
 	<BR><B>Right Pocket:</B> <A href='?src=\ref[src];item=[WEAR_R_STORE]'>[(r_store ? r_store : "Nothing")]</A>
 	<BR>
@@ -1147,9 +1147,11 @@
 	INVOKE_ASYNC(src, .proc/regenerate_icons)
 	INVOKE_ASYNC(src, .proc/restore_blood)
 	INVOKE_ASYNC(src, .proc/update_body, 1, 0)
-	INVOKE_ASYNC(src, .proc/update_hair)
 	if(!(species.flags & HAS_UNDERWEAR))
 		INVOKE_ASYNC(src, .proc/remove_underwear)
+
+	default_lighting_alpha = species.default_lighting_alpha
+	update_sight()
 
 	if(species)
 		return TRUE
@@ -1222,6 +1224,13 @@
 
 	hud_used.locate_leader.icon_state = "trackoff"
 
+	var/static/list/squad_leader_trackers = list(
+		TRACKER_ASL = /datum/squad/alpha,
+		TRACKER_BSL = /datum/squad/bravo,
+		TRACKER_CSL = /datum/squad/charlie,
+		TRACKER_DSL = /datum/squad/delta,
+		TRACKER_ESL = /datum/squad/echo
+	)
 	switch(tracker_setting)
 		if(TRACKER_SL)
 			if(assigned_squad)
@@ -1247,6 +1256,11 @@
 		if(TRACKER_XO)
 			H = GLOB.marine_leaders[JOB_XO]
 			tracking_suffix = "_xo"
+		else
+			if(tracker_setting in squad_leader_trackers)
+				var/datum/squad/S = RoleAuthority.squads_by_type[squad_leader_trackers[tracker_setting]]
+				H = S.squad_leader
+				tracking_suffix = tracker_setting
 
 	if(!H)
 		return
@@ -1285,12 +1299,20 @@
 
 	sight &= ~BLIND // Never have blind on by default
 
+<<<<<<< HEAD
 	if(!(SEND_SIGNAL(src, COMSIG_MOB_PRE_GLASSES_SIGHT_BONUS) & COMPONENT_BLOCK_GLASSES_SIGHT_BONUS))
 		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = species.darksight
 		if(glasses)
 			process_glasses(glasses)
+=======
+	lighting_alpha = default_lighting_alpha
+	sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+	see_in_dark = species.darksight
+	if(glasses)
+		process_glasses(glasses)
+>>>>>>> b0d6b9abaa06ae4502dcc1a259d726ba2bef94b8
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_POST_UPDATE_SIGHT)
 	sync_lighting_plane_alpha()
@@ -1382,7 +1404,7 @@
 	. = ..(mapload, new_species = "Yiren")
 
 /mob/living/carbon/human/synthetic/Initialize(mapload)
-	. = ..(mapload, "Synthetic")
+	. = ..(mapload, SYNTH_GEN_THREE)
 
 /mob/living/carbon/human/synthetic/old/Initialize(mapload)
 	. = ..(mapload, SYNTH_COLONY)
@@ -1395,9 +1417,6 @@
 
 /mob/living/carbon/human/synthetic/second/Initialize(mapload)
 	. = ..(mapload, SYNTH_GEN_TWO)
-
-/mob/living/carbon/human/synthetic/third/Initialize(mapload)
-	. = ..(mapload, SYNTH_GEN_THREE)
 
 
 /mob/living/carbon/human/resist_fire()

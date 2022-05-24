@@ -436,6 +436,8 @@
 				robot = "Prosthetic<br>"
 			if(LIMB_ROBOT|LIMB_UNCALIBRATED_PROSTHETIC)
 				robot = "Nonfunctional prosthetic<br>"
+		else if(e.status & LIMB_SYNTHSKIN)
+			robot = "Synthskin"
 		if(e.get_incision_depth())
 			open = "Open<br>"
 

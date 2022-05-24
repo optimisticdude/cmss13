@@ -160,6 +160,11 @@
 
 //If the item works as a crutch when held
 #define TRAIT_CRUTCH "t_crutch"
+// -- ability traits --
+ /// Xenos with this trait cannot have plasma transfered to them
+#define TRAIT_ABILITY_NO_PLASMA_TRANSFER "t_ability_no_plasma_transfer"
+ /// Shows that the xeno queen is on ovi
+#define TRAIT_ABILITY_OVIPOSITOR "t_ability_ovipositor"
 
 // TOOL TRAITS
 #define TRAIT_TOOL_SCREWDRIVER "t_tool_screwdriver"
@@ -238,3 +243,5 @@ GLOBAL_LIST_INIT(mob_traits, list(
 #define TRAIT_SOURCE_SKILL(skill) "t_s_skill_[skill]"
 ///Status trait coming from attachment
 #define TRAIT_SOURCE_ATTACHMENT(slot) "t_s_attachment_[slot]"
+ ///Status trait coming from ability
+#define TRAIT_SOURCE_ABILITY(ability) "t_s_ability_[ability]"

@@ -33,6 +33,9 @@ Basics, the most important.
 /datum/config_entry/flag/no_restarts
 	config_entry_value = TRUE
 
+/// Server to notify of game events
+/datum/config_entry/string/manager_url
+
 /// URL for the CentCom Galactic Ban DB API
 /datum/config_entry/string/centcom_ban_db
 
@@ -474,6 +477,8 @@ This maintains a list of ip addresses that are able to bypass topic filtering.
 /datum/config_entry/flag/respawn
 
 /datum/config_entry/flag/ToRban
+
+/datum/config_entry/flag/ooc_country_flags
 
 /datum/config_entry/flag/report_runtimes
 

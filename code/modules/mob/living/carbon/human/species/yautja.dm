@@ -161,6 +161,7 @@
 	var/datum/mob_hud/medical/advanced/A = huds[MOB_HUD_MEDICAL_ADVANCED]
 	A.add_to_hud(H)
 	H.blood_type = pick("A+","A-","B+","B-","O-","O+","AB+","AB-")
+	H.h_style = "Bald"
 	GLOB.yautja_mob_list -= H
 
 /datum/species/yautja/handle_post_spawn(var/mob/living/carbon/human/H)
@@ -168,7 +169,11 @@
 	H.universal_understand = 1
 
 	H.blood_type = "Y*"
+	H.h_style = "Standard"
 	GLOB.yautja_mob_list += H
 
 	H.set_languages(list(LANGUAGE_YAUTJA))
 	return ..()
+
+/datum/species/yautja/get_hairstyle(var/style)
+	return GLOB.yautja_hair_styles_list[style]

@@ -56,8 +56,6 @@
 #define ACID_SPRAY_LINE 0
 #define ACID_SPRAY_CONE 1
 
-#define XENOZOOM_NO_MOVEMENT_HANDLER 69420
-
 #define WARDEN_HEAL_SHIELD 0
 #define WARDEN_HEAL_HP 1
 #define WARDEN_HEAL_DEBUFFS 2
@@ -114,9 +112,9 @@
 
 #define XVX_UNIVERSAL_DAMAGEMULT 1.5 // Use to unilaterally buff every caste's DAMAGE against other xenos.
 
-#define XVX_SLASH_DAMAGEMULT 1.5 * XVX_UNIVERSAL_DAMAGEMULT // Applies to any abilities that uses brute damage or slash damage
-#define XVX_ACID_DAMAGEMULT 1.75 * XVX_UNIVERSAL_DAMAGEMULT // Applies to any abilities that apply acid damage (not including projectiles)
-#define XVX_PROJECTILE_DAMAGEMULT 1.75 * XVX_UNIVERSAL_DAMAGEMULT // Applies to any abilities that use projectiles
+#define XVX_SLASH_DAMAGEMULT 1 * XVX_UNIVERSAL_DAMAGEMULT // 1.5 | Applies to any abilities that uses brute damage or slash damage
+#define XVX_ACID_DAMAGEMULT 1.75 * XVX_UNIVERSAL_DAMAGEMULT // 2.625 | Applies to any abilities that apply acid damage (not including projectiles)
+#define XVX_PROJECTILE_DAMAGEMULT 1.75 * XVX_UNIVERSAL_DAMAGEMULT // 2.625 | Applies to any abilities that use projectiles
 
 #define XVX_STUN_LENGTHMULT 1.25
 
@@ -287,12 +285,15 @@
 // Cost to make things, add +XENO_RESIN_BASE_COST to them all for actual cost
 #define XENO_RESIN_BASE_COST 25
 #define XENO_RESIN_WALL_COST 95
+#define XENO_RESIN_WALL_QUEEN_COST 120
 #define XENO_RESIN_WALL_THICK_COST 145
 #define XENO_RESIN_WALL_REFLECT_COST 145
 #define XENO_RESIN_WALL_MOVABLE_COST 145
 #define XENO_RESIN_DOOR_COST 95
+#define XENO_RESIN_DOOR_QUEEN_COST 100
 #define XENO_RESIN_DOOR_THICK_COST 120
 #define XENO_RESIN_MEMBRANE_COST 70
+#define XENO_RESIN_MEMBRANE_QUEEN_COST 80
 #define XENO_RESIN_MEMBRANE_THICK_COST 95
 #define XENO_RESIN_NEST_COST 70
 #define XENO_RESIN_STICKY_COST 30
@@ -615,3 +616,18 @@
 #define SECRETE_RESIN_INTERRUPT -1
 #define SECRETE_RESIN_FAIL 0
 #define SECRETE_RESIN_SUCCESS 1
+
+//preferences-related defines
+
+#define XENO_VISION_LEVEL_NO_NVG		"No Night Vision"
+#define XENO_VISION_LEVEL_MID_NVG		"Half Night Vision"
+#define XENO_VISION_LEVEL_FULL_NVG		"Full Night Vision"
+
+
+// drone fruits
+
+#define XENO_FRUIT_LESSER "Lesser Resin Fruit"
+#define XENO_FRUIT_GREATER "Greater Resin Fruit"
+#define XENO_FRUIT_UNSTABLE "Unstable Resin Fruit"
+#define XENO_FRUIT_SPORE "Spore Resin Fruit"
+#define XENO_FRUIT_SPEED "Alacrit Resin Fruit"
