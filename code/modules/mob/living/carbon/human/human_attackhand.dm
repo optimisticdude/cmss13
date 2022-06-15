@@ -262,15 +262,12 @@
 			else
 				status += "a torn stump"
 				severe = TRUE
-		else if(org.status & LIMB_ROBOT)
+		else if(org.status & (LIMB_ROBOT|LIMB_SYNTHSKIN))
 			prosthetic = TRUE
 			if(org.status & LIMB_UNCALIBRATED_PROSTHETIC)
 				status += " not working"
 				severe = TRUE
 			switch(org.brute_dam)
-			status += "MISSING!"
-		else if(org.status & (LIMB_ROBOT|LIMB_SYNTHSKIN))
-			switch(brutedamage)
 				if(1 to 20)
 					status += "dented"
 				if(20 to 40)

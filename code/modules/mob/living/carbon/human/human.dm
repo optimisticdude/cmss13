@@ -1299,20 +1299,12 @@
 
 	sight &= ~BLIND // Never have blind on by default
 
-<<<<<<< HEAD
 	if(!(SEND_SIGNAL(src, COMSIG_MOB_PRE_GLASSES_SIGHT_BONUS) & COMPONENT_BLOCK_GLASSES_SIGHT_BONUS))
-		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+		lighting_alpha = default_lighting_alpha
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = species.darksight
-		if(glasses)
-			process_glasses(glasses)
-=======
-	lighting_alpha = default_lighting_alpha
-	sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-	see_in_dark = species.darksight
 	if(glasses)
 		process_glasses(glasses)
->>>>>>> b0d6b9abaa06ae4502dcc1a259d726ba2bef94b8
 
 	SEND_SIGNAL(src, COMSIG_HUMAN_POST_UPDATE_SIGHT)
 	sync_lighting_plane_alpha()

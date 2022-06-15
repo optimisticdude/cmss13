@@ -87,7 +87,7 @@ their unique feature is that a direct hit will buff your damage and firerate
 			if(O.status & LIMB_BROKEN)
 				O = human_user.get_limb(user.hand ? "l_arm" : "r_arm")
 				human_user.drop_held_item()
-			O.fracture()
+			//O.fracture()
 			O.status &= ~LIMB_SPLINTED
 			human_user.pain.recalculate_pain()
 			return

@@ -832,16 +832,8 @@ mob/proc/yank_out_object()
 		affected.take_damage((selection.w_class * 3), 0, 0, "Embedded object extraction")
 		H.pain.apply_pain(selection.w_class * 3)
 
-<<<<<<< HEAD
-		if(prob(selection.w_class * 5) && !(affected.status & LIMB_ROBOT))
-			//var/datum/wound/internal_bleeding/I = new (0)
-
-=======
 		if(prob(selection.w_class * 5) && !(affected.status & (LIMB_ROBOT|LIMB_SYNTHSKIN)))
-			var/datum/wound/internal_bleeding/I = new (0)
-			affected.add_bleeding(I, TRUE)
-			affected.wounds += I
->>>>>>> b0d6b9abaa06ae4502dcc1a259d726ba2bef94b8
+			//var/datum/wound/internal_bleeding/I = new (0)
 			H.custom_pain("Something tears wetly in your [affected] as [selection] is pulled free!", 1)
 
 	selection.forceMove(get_turf(src))
@@ -1050,7 +1042,6 @@ mob/proc/yank_out_object()
 
 	. += "<option value='?_src_=vars;gib=\ref[src]'>Gib</option>"
 
-<<<<<<< HEAD
 /mob/proc/stop_pulling()
 	if(pulling)
 		var/mob/M = pulling
@@ -1075,7 +1066,6 @@ mob/proc/yank_out_object()
 			M.update_canmove()
 
 		SEND_SIGNAL(src, COMSIG_MOB_STOPPED_PULLING, M)
-=======
 /mob/Topic(href, href_list)
 	. = ..()
 	if(.)
@@ -1084,4 +1074,3 @@ mob/proc/yank_out_object()
 		if(client)
 			client.prefs.process_link(src, href_list)
 		return TRUE
->>>>>>> b0d6b9abaa06ae4502dcc1a259d726ba2bef94b8

@@ -23,6 +23,8 @@
 #define LIMB_SPLINTED_INDESTRUCTIBLE (1<<8) // Splint is indestructible
 #define LIMB_UNCALIBRATED_PROSTHETIC (1<<9) //A prosthetic that's been attached to the body but not connected to the brain.
 
+#define HUMAN_LIMB_AMOUNT 11 // old code from human_attackhand.dm 
+
 ///////////////////WOUND DEFINES///////////////////
 //wound flags. Different examine text + bandage overlays + whether various medical items can be used.
 #define WOUND_BANDAGED (1<<0)
