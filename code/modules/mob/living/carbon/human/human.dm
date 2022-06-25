@@ -74,6 +74,8 @@
 			qdel(L)
 		limbs = null
 
+	assigned_equipment_preset = null
+
 	remove_from_all_mob_huds()
 	GLOB.human_mob_list -= src
 	GLOB.alive_human_list -= src
@@ -503,7 +505,7 @@
 			usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [key_name(src)]'s' sensors</font>")
 			var/obj/item/clothing/under/U = w_uniform
 			if(QDELETED(U))
-				to_chat(usr, "You're not wearing a uniform!.")
+				to_chat(usr, "You're not wearing a uniform!")
 			else if(U.has_sensor >= UNIFORM_FORCED_SENSORS)
 				to_chat(usr, "The controls are locked.")
 			else
@@ -1225,11 +1227,11 @@
 	hud_used.locate_leader.icon_state = "trackoff"
 
 	var/static/list/squad_leader_trackers = list(
-		TRACKER_ASL = /datum/squad/alpha,
-		TRACKER_BSL = /datum/squad/bravo,
-		TRACKER_CSL = /datum/squad/charlie,
-		TRACKER_DSL = /datum/squad/delta,
-		TRACKER_ESL = /datum/squad/echo
+		TRACKER_ASL = /datum/squad/marine/alpha,
+		TRACKER_BSL = /datum/squad/marine/bravo,
+		TRACKER_CSL = /datum/squad/marine/charlie,
+		TRACKER_DSL = /datum/squad/marine/delta,
+		TRACKER_ESL = /datum/squad/marine/echo
 	)
 	switch(tracker_setting)
 		if(TRACKER_SL)
@@ -1534,7 +1536,7 @@
 	. += "<option value='?_src_=vars;edit_skill=\ref[src]'>Edit Skills</option>"
 	. += "<option value='?_src_=vars;setspecies=\ref[src]'>Set Species</option>"
 	. += "<option value='?_src_=vars;selectequipment=\ref[src]'>Select Equipment</option>"
-	. += "<option value='?_src_=admin_holder;adminspawncookie=\ref[src]'>Give Cookie</option>"
+	. += "<option value='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];adminspawncookie=\ref[src]'>Give Cookie</option>"
 
 /mob/living/carbon/human/update_can_stand()
 	var/prev_state = can_stand
@@ -1581,3 +1583,4 @@
 		if(!can_stand)
 			to_chat(src, SPAN_DANGER("Your legs can't hold you up any longer!"))
 		update_canmove()
+

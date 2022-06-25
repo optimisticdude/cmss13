@@ -2114,6 +2114,15 @@
 	name = "precise taser bolt"
 	flags_ammo_behavior = AMMO_ENERGY|AMMO_IGNORE_RESIST|AMMO_MP
 
+/datum/ammo/energy/rxfm_eva
+	name = "focused energy bolt"
+	icon_state = "cm_laser"
+	flags_ammo_behavior = AMMO_ENERGY
+	accurate_range = 7
+	max_range = 14
+	damage = 25
+	shell_speed = AMMO_SPEED_TIER_2
+
 
 /datum/ammo/energy/yautja/
 	headshot_state	= HEADSHOT_OVERLAY_MEDIUM
@@ -2778,6 +2787,16 @@
 	LAZYADD(traits_to_give, list(
 		BULLET_TRAIT_ENTRY(/datum/element/bullet_trait_incendiary)
 	))
+
+/datum/ammo/bullet/shrapnel/metal
+	name = "metal shrapnel"
+	icon_state = "shrapnelshot_bit"
+	flags_ammo_behavior = AMMO_STOPPED_BY_COVER|AMMO_BALLISTIC
+	shell_speed = AMMO_SPEED_TIER_1
+	damage = 30
+	shrapnel_chance = 15
+	accuracy = HIT_ACCURACY_TIER_8
+	penetration = ARMOR_PENETRATION_TIER_4
 
 /datum/ammo/bullet/shrapnel/light // weak shrapnel
 	name = "light shrapnel"

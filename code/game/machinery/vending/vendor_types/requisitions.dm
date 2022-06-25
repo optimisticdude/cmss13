@@ -59,6 +59,7 @@
 		list("M40 HIRR Baton Slug", round(scale * 8), /obj/item/explosive/grenade/slug/baton, VENDOR_ITEM_REGULAR),
 		list("M40 MFHS Metal Foam Grenade", round(scale * 3), /obj/item/explosive/grenade/metal_foam, VENDOR_ITEM_REGULAR),
 		list("Plastic Explosives", round(scale * 3), /obj/item/explosive/plastic, VENDOR_ITEM_REGULAR),
+		list("Breaching Charge", round(scale * 2), /obj/item/explosive/plastic/breaching_charge, VENDOR_ITEM_REGULAR),
 
 		list("WEBBINGS", -1, null, null),
 		list("Black Webbing Vest", round(scale * 2), /obj/item/clothing/accessory/storage/black_vest, VENDOR_ITEM_REGULAR),
@@ -221,7 +222,8 @@
 		list("M89-S Signal Flare Pack", round(scale * 1), /obj/item/storage/box/m94/signal, VENDOR_ITEM_REGULAR),
 		list("Machete Scabbard (Full)", round(scale * 5), /obj/item/storage/large_holster/machete/full, VENDOR_ITEM_REGULAR),
 		list("Binoculars", round(scale * 1), /obj/item/device/binoculars, VENDOR_ITEM_REGULAR),
-		list("MB-6 Folding Barricades (x3)", round(scale * 2), /obj/item/stack/folding_barricade/three, VENDOR_ITEM_REGULAR)
+		list("MB-6 Folding Barricades (x3)", round(scale * 2), /obj/item/stack/folding_barricade/three, VENDOR_ITEM_REGULAR),
+		list("Spare PDT/L Battle Buddy Kit", round(scale * 1), /obj/item/storage/box/pdt_kit, VENDOR_ITEM_REGULAR)
 		)
 
 //------------AMMUNITION VENDOR---------------

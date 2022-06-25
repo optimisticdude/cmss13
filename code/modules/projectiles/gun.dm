@@ -1199,7 +1199,7 @@ and you're good to go.
 		if(!able_to_fire(user))
 			return TRUE
 
-		var/ffl = " (<A HREF='?_src_=admin_holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>) ([user.client ? "<a href='?priv_msg=[user.client.ckey]'>PM</a>" : "NO CLIENT"])"
+		var/ffl = " (<A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>) ([user.client ? "<a href='?priv_msg=[user.client.ckey]'>PM</a>" : "NO CLIENT"])"
 
 		var/obj/item/weapon/gun/revolver/current_revolver = src
 		if(istype(current_revolver) && current_revolver.russian_roulette)
@@ -1678,3 +1678,17 @@ not all weapons use normal magazines etc. load_into_chamber() itself is designed
 	rotate.Turn(angle)
 	I.transform = rotate
 	I.flick_overlay(user, 3)
+
+/obj/item/weapon/gun/attack_alien(mob/living/carbon/Xenomorph/xeno)
+	..()
+	var/slashed_light = FALSE
+	for(var/slot in attachments)
+		if(istype(attachments[slot], /obj/item/attachable/flashlight))
+			var/obj/item/attachable/flashlight/flashlight = attachments[slot]
+			if(flashlight.activate_attachment(src, xeno, TRUE))
+				slashed_light = TRUE
+	if(slashed_light)
+		playsound(loc, "alien_claw_metal", 25, 1)
+		xeno.animation_attack_on(src)
+		xeno.visible_message(SPAN_XENOWARNING("\The [xeno] slashes the lights on \the [src]!"), SPAN_XENONOTICE("You slash the lights on \the [src]!"))
+	return XENO_ATTACK_ACTION

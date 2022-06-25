@@ -390,7 +390,7 @@
 	set category = "Smartgun"
 	set name = "Toggle Lethal Mode"
 	set src in usr
-	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr)
+	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr, FALSE)
 	if(!istype(G))
 		return
 
@@ -404,7 +404,7 @@
 	set category = "Smartgun"
 	set name = "Toggle Ammo Type"
 	set src in usr
-	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr)
+	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr, FALSE)
 	if(!istype(G))
 		return
 
@@ -418,7 +418,7 @@
 	set category = "Smartgun"
 	set name = "Toggle Recoil Compensation"
 	set src in usr
-	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr)
+	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr, FALSE)
 	if(!istype(G))
 		return
 
@@ -432,7 +432,7 @@
 	set category = "Smartgun"
 	set name = "Toggle Accuracy Improvement"
 	set src in usr
-	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr)
+	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr, FALSE)
 	if(!istype(G))
 		return
 
@@ -446,7 +446,7 @@
 	set category = "Smartgun"
 	set name = "Toggle Auto Fire"
 	set src in usr
-	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr)
+	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr, FALSE)
 	if(!istype(G))
 		return
 
@@ -460,7 +460,7 @@
 	set category = "Smartgun"
 	set name = "Toggle Motion Detector"
 	set src in usr
-	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr)
+	var/obj/item/weapon/gun/smartgun/G = get_active_firearm(usr, FALSE)
 	if(!istype(G))
 		return
 
@@ -721,6 +721,66 @@
 		if(!auto_fire)
 			STOP_PROCESSING(SSobj, src)
 
+//CO SMARTGUN
+/obj/item/weapon/gun/smartgun/co
+	name = "\improper M56C 'Cavalier' smartgun"
+	desc = "The actual firearm in the 4-piece M56C Smartgun system. Back order only. Besides a more robust weapons casing, an ID lock system and a fancy paintjob, the gun's performance is identical to the standard-issue M56B."
+	icon_state = "m56c"
+	item_state = "m56c"
+	flags_gun_features = GUN_AUTO_EJECTOR|GUN_SPECIALIST|GUN_WIELDED_FIRING_ONLY|GUN_HAS_FULL_AUTO
+
+	var/mob/living/carbon/human/linked_human
+	var/is_locked = TRUE
+
+/obj/item/weapon/gun/smartgun/co/able_to_fire(mob/user)
+	. = ..()
+	if(is_locked && linked_human && linked_human != user)
+		if(linked_human.is_revivable() || linked_human.stat != DEAD)
+			to_chat(user, SPAN_WARNING("[icon2html(src)] Trigger locked by [src]. Unauthorized user."))
+			playsound(loc,'sound/weapons/gun_empty.ogg', 25, 1)
+			return FALSE
+
+		linked_human = null
+		is_locked = FALSE
+		UnregisterSignal(linked_human, COMSIG_PARENT_QDELETING)
+
+/obj/item/weapon/gun/smartgun/co/pickup(user)
+	if(!linked_human)
+		src.name_after_co(user, src)
+		to_chat(usr, SPAN_NOTICE("[icon2html(src)] You pick up \the [src], registering yourself as its owner."))
+	..()
+
+/obj/item/weapon/gun/smartgun/co/verb/toggle_lock()
+	set category = "Weapons"
+	set name = "Toggle Lock"
+	set src in usr
+
+	if(usr != linked_human)
+		to_chat(usr, SPAN_WARNING("[icon2html(src)] Action denied by \the [src]. Unauthorized user."))
+		return
+
+	is_locked = !is_locked
+	to_chat(usr, SPAN_NOTICE("[icon2html(src)] You [is_locked? "lock": "unlock"] \the [src]."))
+	playsound(loc,'sound/machines/click.ogg', 25, 1)
+
+/obj/item/weapon/gun/smartgun/co/proc/name_after_co(var/mob/living/carbon/human/H, var/obj/item/weapon/gun/smartgun/co/I)
+	linked_human = H
+	RegisterSignal(linked_human, COMSIG_PARENT_QDELETING, .proc/remove_idlock)
+
+/obj/item/weapon/gun/smartgun/co/examine()
+	..()
+	if(linked_human)
+		if(is_locked)
+			to_chat(usr, SPAN_NOTICE("It is registered to [linked_human]."))
+		else
+			to_chat(usr, SPAN_NOTICE("It is registered to [linked_human], but has its fire restrictions unlocked."))
+	else
+		to_chat(usr, SPAN_NOTICE("It's unregistered. Pick it up to register yourself as its owner."))
+
+/obj/item/weapon/gun/smartgun/co/proc/remove_idlock()
+	SIGNAL_HANDLER
+	linked_human = null
+
 /obj/item/weapon/gun/smartgun/dirty
 	name = "\improper M56D 'Dirty' smartgun"
 	desc = "The actual firearm in the 4-piece M56D Smartgun System. If you have this, you're about to bring some serious pain to anyone in your way.\nYou may toggle firing restrictions by using a special action."
@@ -955,7 +1015,7 @@ obj/item/weapon/gun/launcher/grenade/update_icon()
 		var/obj/item/explosive/grenade/G = cylinder.contents[1]
 		if(G.antigrief_protection && user.faction == FACTION_MARINE && explosive_grief_check(G))
 			to_chat(user, SPAN_WARNING("\The [name]'s safe-area accident inhibitor prevents you from firing!"))
-			msg_admin_niche("[key_name(user)] attempted to prime \a [G.name] in [get_area(src)] (<A HREF='?_src_=admin_holder;adminplayerobservecoodjump=1;X=[src.loc.x];Y=[src.loc.y];Z=[src.loc.z]'>JMP</a>)")
+			msg_admin_niche("[key_name(user)] attempted to prime \a [G.name] in [get_area(src)] (<A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservecoodjump=1;X=[src.loc.x];Y=[src.loc.y];Z=[src.loc.z]'>JMP</a>)")
 			return FALSE
 
 
@@ -1192,7 +1252,7 @@ obj/item/weapon/gun/launcher/grenade/update_icon()
 			return 0
 		if(user.faction == FACTION_MARINE && explosive_grief_check(src))
 			to_chat(user, SPAN_WARNING("\The [name]'s safe-area accident inhibitor prevents you from firing!"))
-			msg_admin_niche("[key_name(user)] attempted to fire \a [name] in [get_area(src)] (<A HREF='?_src_=admin_holder;adminplayerobservecoodjump=1;X=[src.loc.x];Y=[src.loc.y];Z=[src.loc.z]'>JMP</a>)")
+			msg_admin_niche("[key_name(user)] attempted to fire \a [name] in [get_area(src)] (<A HREF='?_src_=admin_holder;[HrefToken(forceGlobal = TRUE)];adminplayerobservecoodjump=1;X=[src.loc.x];Y=[src.loc.y];Z=[src.loc.z]'>JMP</a>)")
 			return FALSE
 		if(current_mag && current_mag.current_rounds > 0)
 			make_rocket(user, 0, 1)
