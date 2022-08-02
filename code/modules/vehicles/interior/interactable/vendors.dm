@@ -24,8 +24,8 @@
 		list("Health Analyzer", 3, /obj/item/device/healthanalyzer, VENDOR_ITEM_REGULAR),
 
 		list("FIELD SUPPLIES", -1, null, null),
-		list("Advanced Burn Kit", 5, /obj/item/stack/medical/advanced/ointment, VENDOR_ITEM_REGULAR),
-		list("Advanced Trauma Kit", 5, /obj/item/stack/medical/advanced/bruise_pack, VENDOR_ITEM_REGULAR),
+		list("Advanced Burn Kit", 5, /obj/item/stack/medical/healing/burnkit, VENDOR_ITEM_REGULAR),
+		list("Advanced Trauma Kit", 5, /obj/item/stack/medical/healing/traumakit, VENDOR_ITEM_REGULAR),
 		list("Ointment", 10, /obj/item/stack/medical/ointment, VENDOR_ITEM_REGULAR),
 		list("Roll of Gauze", 10, /obj/item/stack/medical/bruise_pack, VENDOR_ITEM_REGULAR),
 		list("Splints", 10, /obj/item/stack/medical/splint, VENDOR_ITEM_REGULAR)
@@ -47,8 +47,8 @@
 		)
 
 	stack_refill = list(
-		/obj/item/stack/medical/advanced/ointment,
-		/obj/item/stack/medical/advanced/bruise_pack,
+		/obj/item/stack/medical/healing/burnkit,
+		/obj/item/stack/medical/healing/traumakit,
 		/obj/item/stack/medical/ointment,
 		/obj/item/stack/medical/bruise_pack,
 		/obj/item/stack/medical/splint
@@ -92,8 +92,8 @@
 		)
 
 	stack_refill = list(
-		/obj/item/stack/medical/advanced/ointment,
-		/obj/item/stack/medical/advanced/bruise_pack,
+		/obj/item/stack/medical/healing/burnkit,
+		/obj/item/stack/medical/healing/traumakit,
 		/obj/item/stack/medical/ointment,
 		/obj/item/stack/medical/bruise_pack,
 		/obj/item/stack/medical/splint
@@ -102,8 +102,8 @@
 /obj/structure/machinery/cm_vending/sorted/medical/vehicle/populate_product_list(var/scale)
 	listed_products = list(
 		list("FIELD SUPPLIES", -1, null, null),
-		list("Advanced Burn Kit", round(scale * 4), /obj/item/stack/medical/advanced/ointment, VENDOR_ITEM_REGULAR),
-		list("Advanced Trauma Kit", round(scale * 4), /obj/item/stack/medical/advanced/bruise_pack, VENDOR_ITEM_REGULAR),
+		list("Advanced Burn Kit", round(scale * 4), /obj/item/stack/medical/healing/burnkit, VENDOR_ITEM_REGULAR),
+		list("Advanced Trauma Kit", round(scale * 4), /obj/item/stack/medical/healing/traumakit, VENDOR_ITEM_REGULAR),
 		list("Ointment", round(scale * 5), /obj/item/stack/medical/ointment, VENDOR_ITEM_REGULAR),
 		list("Roll of Gauze", round(scale * 5), /obj/item/stack/medical/bruise_pack, VENDOR_ITEM_REGULAR),
 		list("Splints", round(scale * 5), /obj/item/stack/medical/splint, VENDOR_ITEM_REGULAR),
