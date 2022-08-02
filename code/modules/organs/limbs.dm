@@ -824,6 +824,10 @@ This function completely restores a damaged organ to perfect condition.
 			SPAN_HIGHDANGER("<b>Your [display_name] goes flying off!</b>"),
 			SPAN_WARNING("You hear a terrible sound of ripping tendons and flesh!"), 3)
 
+			// Checks if the mob can feel pain or if they have at least oxycodone level of painkiller
+			if(body_part != BODY_FLAG_HEAD && owner.pain.feels_pain && owner.pain.reduction_pain < PAIN_REDUCTION_HEAVY)
+				INVOKE_ASYNC(owner, /mob.proc/emote, pick("pain", "scream"))
+
 			if(organ)
 				//Throw organs around
 				var/lol = pick(cardinal)
@@ -931,7 +935,10 @@ This function completely restores a damaged organ to perfect condition.
 	return !(status & (LIMB_DESTROYED|LIMB_MUTATED|LIMB_UNCALIBRATED_PROSTHETIC))
 
 /obj/limb/proc/is_malfunctioning()
-	return ((status & (LIMB_ROBOT|LIMB_SYNTHSKIN)) && prob(brute_dam + burn_dam))
+	if(status & LIMB_ROBOT)
+		return prob(brute_dam + burn_dam)
+	else if(status & LIMB_SYNTHSKIN && (brute_dam + burn_dam) > 10)
+		return prob(brute_dam + burn_dam)
 
 //for arms and hands
 

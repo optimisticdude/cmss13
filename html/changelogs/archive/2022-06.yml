@@ -310,3 +310,69 @@
   - bugfix: trying to weld a closet while your welder is off will no longer tell you
       you don't have enough fuel.
   - rscadd: added a minor do_after to closet welding and breaking.
+2022-06-25:
+  50RemAndCounting, Quickload:
+  - imageadd: added a dark blue variant of the surgical webbing vest, functionally
+      identical to the existing green version.
+  Maciekkub:
+  - bugfix: Fixes M5RPG text displaying "It's unloaded but has round chambered" and
+      now correctly displays if it's empty upon examine
+  - bugfix: Sound and notification now only play when you reach max threshold or above.
+  Silencer_pl:
+  - bugfix: MP service jackets can be opened and closed again without causing icon
+      errors.
+  stanalbatross:
+  - balance: bodybag boxes can now only hold bodybags
+  - qol: made the input box for writing medal citations larger.
+2022-06-26:
+  Stan_Albatross:
+  - rscadd: added a functioning top cover to the smartgun, can be opened and closed
+      with alt-click. You must open the cover to remove the drum or replace it. You
+      cannot fire the gun with the cover open. Thanks to Jooks for the sounds of opening/closing
+      the cover.
+  - bugfix: fixed being able to telepathically toggle the mode of laser designators.
+  stanalbatross:
+  - bugfix: bodybag boxes will no longer runtime on init
+  - bugfix: Ravagers will no longer count holograms such as the queen eye as enemies
+      for the purposes of empowering.
+2022-06-27:
+  Geeves:
+  - bugfix: Ported a fix on /tg/ created by willox that might fix the sticky movement
+      keys bug.
+  Joe Lampost,Spartanbobby:
+  - soundadd: Added Yautja pain screams
+  - soundadd: Yautja can now mimic xenomorphs with *alienhelp and *aliengrowl
+  - soundadd: 'Yautja now have three new soulful emotes to use to create a sense of
+      dread: *click2, *overthere and *comeonout'
+  - soundadd: added a new sound for claiming trophies *roar2
+  stanalbatross:
+  - balance: removed the type 23 from the black market crate pool
+  - balance: tweaked down the damage of all type 23 ammo (8g shells)
+2022-06-28:
+  50RemAndCounting:
+  - spellcheck: fixed a few typos and spelling inconsistencies in Captain Hans Naiche's
+      announcements on Whiskey Outpost.
+  Diegoflores31:
+  - balance: Increased C4 damage to nearby walls to make its destructive power more
+      consistent.
+  - balance: increased wall damage to breaching charge to be able to break the reinforced
+      wall where it is planted.
+  - bugfix: fixed C4 and bcharge timers getting stuck on 60
+  Maciekkub:
+  - bugfix: You cannot crowbar grass tiles on Almayer preventing duplication.
+  naut:
+  - rscadd: Added some new craft beers that can be found in the Booze-o-Mat.
+  stanalbatross:
+  - bugfix: fixed some tiles in the brig on the Almayer not allowing construction.
+  - rscadd: Added two new nightmare inserts for the gym on LV.
+2022-06-29:
+  Geevies:
+  - rscadd: Tweaked some xeno cultist equipment to be more generic.
+  - rscadd: Tweaked how human speech in the hivemind appears to look way better.
+  - bugfix: Equipping someone as a xeno cultist will no longer duplicate their robes/hood,
+      and it'll be force-attached from the start.
+  - balance: Xeno cultists can now partially see in the darkness.
+  - admin: Xeno cultists now get XOOC messages too.
+2022-06-30:
+  Diegoflores31:
+  - bugfix: Eggsac Carrier can no longer bypass Egg production cooldown

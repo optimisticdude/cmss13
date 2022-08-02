@@ -654,7 +654,8 @@ Defined in conflicts.dm of the #defines folder.
 
 	for(var/X in G.actions)
 		var/datum/action/A = X
-		A.update_button_icon()
+		if(A.target == src)
+			A.update_button_icon()
 	return TRUE
 
 
@@ -1047,6 +1048,11 @@ Defined in conflicts.dm of the #defines folder.
 	var/message = deploy_message[1 + stock_activated]
 	to_chat(user, SPAN_NOTICE("You [message] [src]."))
 
+	for(var/X in gun.actions)
+		var/datum/action/A = X
+		if(istype(A, /datum/action/item_action/toggle))
+			A.update_button_icon()
+
 /obj/item/attachable/stock/shotgun
 	name = "\improper M37 wooden stock"
 	desc = "A non-standard heavy wooden stock for the M37 Shotgun. More cumbersome than the standard issue stakeout, but reduces recoil and improves accuracy. Allegedly makes a pretty good club in a fight too.."
@@ -1258,6 +1264,18 @@ Defined in conflicts.dm of the #defines folder.
 	hud_offset_mod = 3
 
 /obj/item/attachable/stock/m16/New()//no stats, its cosmetic
+	..()
+
+/obj/item/attachable/stock/ar10
+	name = "\improper AR10 wooden stock"
+	desc = "The spring's in here, don't take it off!"
+	icon_state = "ar10_stock"
+	attach_icon = "ar10_stock_a"
+	wield_delay_mod = WIELD_DELAY_MIN
+	flags_attach_features = NO_FLAGS
+	hud_offset_mod = 3
+
+/obj/item/attachable/stock/ar10/New()//no stats, its cosmetic
 	..()
 
 /obj/item/attachable/stock/m79
@@ -1738,17 +1756,13 @@ Defined in conflicts.dm of the #defines folder.
 //For the Mk1
 /obj/item/attachable/attached_gun/grenade/mk1
 	name = "MK1 underslung grenade launcher"
-	desc = "An older version of the classic underslung grenade launcher. Does not have IFF capabilities but can store five grenades."
+	desc = "An older version of the classic underslung grenade launcher. Can store five grenades, but fires them slower."
 	icon_state = "grenade-mk1"
 	attach_icon = "grenade-mk1_a"
 	current_rounds = 0
 	max_rounds = 5
 	max_range = 10
 	attachment_firing_delay = 30
-
-/obj/item/attachable/attached_gun/grenade/mk1/Initialize()
-	. = ..()
-	grenade_pass_flags = NO_FLAGS
 
 //"ammo/flamethrower" is a bullet, but the actual process is handled through fire_attachment, linked through Fire().
 /obj/item/attachable/attached_gun/flamer
