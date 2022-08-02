@@ -281,7 +281,7 @@
 				H.visible_message(SPAN_NOTICE("<b>\The [src]</b> fails to perform CPR on <b>[H]</b>."))
 				if(prob(50))
 					var/obj/limb/E = H.get_limb("chest")
-					E.fracture(100)
+					//E.fracture(100)
 			H.cpr_cooldown = world.time + 7 SECONDS
 			pdcell.use(pump_cost)
 			update_icon()
