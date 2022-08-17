@@ -124,6 +124,7 @@ GLOBAL_LIST_INIT_TYPED(all_species, /datum/species, setup_species())
 GLOBAL_REFERENCE_LIST_INDEXED(all_languages, /datum/language, name)
 GLOBAL_LIST_INIT(language_keys, setup_language_keys())					//table of say codes for all languages
 
+
 //Xeno mutators
 GLOBAL_REFERENCE_LIST_INDEXED_SORTED(xeno_mutator_list, /datum/xeno_mutator, name)
 
@@ -138,7 +139,8 @@ GLOBAL_LIST_INIT_TYPED(hive_datum, /datum/hive_status, list(
 	XENO_HIVE_FERAL = new /datum/hive_status/feral(),
 	XENO_HIVE_TAMED = new /datum/hive_status/corrupted/tamed(),
 	XENO_HIVE_MUTATED = new /datum/hive_status/mutated(),
-	XENO_HIVE_FORSAKEN = new /datum/hive_status/forsaken()
+	XENO_HIVE_FORSAKEN = new /datum/hive_status/forsaken(),
+	XENO_HIVE_YAUTJA = new /datum/hive_status/yautja()
 ))
 
 GLOBAL_LIST_INIT(custom_event_info_list, setup_custom_event_info())
@@ -371,3 +373,22 @@ GLOBAL_REFERENCE_LIST_INDEXED(all_skills, /datum/skill, skill_name)
 
 // Timelock
 GLOBAL_LIST_EMPTY(timelocks)
+
+
+//the global list of specialist kits that haven't been claimed yet.
+var/global/list/available_specialist_sets = list(
+			"Scout Set",
+			"Sniper Set",
+			"Demolitionist Set",
+			"Heavy Grenadier Set",
+			"Pyro Set"
+			)
+
+//Similar thing, but used in /obj/item/spec_kit
+var/global/list/available_specialist_kit_boxes = list(
+			"Pyro" = 2,
+			"Grenadier" = 2,
+			"Sniper" = 2,
+			"Scout" = 2,
+			"Demo" = 2,
+			)

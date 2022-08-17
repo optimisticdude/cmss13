@@ -4567,7 +4567,7 @@
 	vector_x = -19;
 	vector_y = 104
 	},
-/obj/structure/blocker/forcefield/vehicles,
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /turf/open/floor/plating/almayer{
 	allow_construction = 0
 	},
@@ -19056,6 +19056,7 @@
 	req_access_txt = "22";
 	req_one_access = null
 	},
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /turf/open/shuttle/dropship{
 	icon_state = "rasputin15";
 	tag = "icon-rasputin15"
@@ -19105,6 +19106,7 @@
 	req_access_txt = "22";
 	req_one_access = null
 	},
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /turf/open/shuttle/dropship{
 	icon_state = "rasputin15";
 	tag = "icon-rasputin15"
@@ -29368,6 +29370,18 @@
 	tag = "icon-wall9"
 	},
 /area/almayer/evacuation/pod12)
+"bUb" = (
+/obj/structure/pipes/standard/manifold/hidden/supply{
+	dir = 4;
+	tag = "icon-map-supply (EAST)"
+	},
+/obj/structure/bed/chair/comfy/bravo{
+	dir = 8
+	},
+/turf/open/floor/almayer{
+	icon_state = "orangefull"
+	},
+/area/almayer/living/briefing)
 "bUc" = (
 /obj/structure/foamed_metal,
 /turf/open/floor/plating,
@@ -34440,7 +34454,7 @@
 	vector_x = -19;
 	vector_y = 98
 	},
-/obj/structure/blocker/forcefield/vehicles,
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /turf/open/floor/plating/almayer{
 	allow_construction = 0
 	},
@@ -35135,7 +35149,7 @@
 /area/almayer/hull/upper_hull/u_a_s)
 "cyG" = (
 /obj/effect/step_trigger/clone_cleaner,
-/obj/structure/blocker/forcefield/vehicles,
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /turf/open/floor/plating/almayer{
 	allow_construction = 0
 	},
@@ -38555,9 +38569,9 @@
 /obj/structure/machinery/door_control{
 	id = "cl_shutters 2";
 	name = "Quarters Shutters";
-	req_access_txt = "200";
+	pixel_x = 11;
 	pixel_y = 37;
-	pixel_x = 11
+	req_access_txt = "200"
 	},
 /turf/open/floor/wood/ship,
 /area/almayer/command/corporateliason)
@@ -41822,20 +41836,20 @@
 "fqe" = (
 /obj/structure/surface/table/almayer,
 /obj/item/tool/pen/blue/clicky{
-	pixel_y = 2;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /obj/item/tool/pen/red/clicky{
 	pixel_x = -1;
 	pixel_y = 1
 	},
 /obj/item/tool/pen/clicky{
-	pixel_y = -1;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = -1
 	},
 /obj/item/paper_bin/wy{
-	pixel_y = 5;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /turf/open/floor/wood/ship,
 /area/almayer/command/corporateliason)
@@ -42557,15 +42571,6 @@
 /obj/effect/decal/cleanable/blood/oil/streak,
 /turf/open/floor/almayer,
 /area/almayer/lifeboat_pumps/south1)
-"fGh" = (
-/obj/structure/bed/chair{
-	dir = 1
-	},
-/turf/open/floor/almayer{
-	icon_state = "plate";
-	tag = "icon-sterile"
-	},
-/area/almayer/living/briefing)
 "fGm" = (
 /turf/open/shuttle/escapepod{
 	icon_state = "floor9";
@@ -44020,6 +44025,13 @@
 "gpe" = (
 /turf/open/floor/almayer,
 /area/almayer/hull/upper_hull/u_f_p)
+"gpi" = (
+/obj/structure/dropship_equipment/rappel_system,
+/turf/open/floor/almayer{
+	icon_state = "test_floor4";
+	tag = "icon-test_floor4"
+	},
+/area/almayer/hallways/hangar)
 "gpE" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/safety/distribution_pipes{
@@ -51703,7 +51715,7 @@
 /area/almayer/hallways/starboard_hallway)
 "jWU" = (
 /obj/effect/step_trigger/clone_cleaner,
-/obj/structure/blocker/forcefield/vehicles,
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /turf/open/floor/plating/almayer{
 	allow_construction = 0
 	},
@@ -51872,7 +51884,7 @@
 /area/almayer/squads/alpha)
 "kaF" = (
 /obj/effect/step_trigger/clone_cleaner,
-/obj/structure/blocker/forcefield/vehicles,
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /obj/structure/sign/safety/stairs{
 	pixel_x = 8;
 	pixel_y = 32
@@ -54413,6 +54425,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/device/radio/marine,
 /obj/item/clothing/accessory/storage/surg_vest,
+/obj/item/tool/portadialysis,
 /turf/open/floor/almayer{
 	dir = 8;
 	icon_state = "sterile_green_side";
@@ -67766,6 +67779,14 @@
 	},
 /turf/open/floor/plating,
 /area/almayer/engineering/upper_engineering)
+"rwv" = (
+/obj/structure/pipes/standard/simple/hidden/supply,
+/obj/structure/bed/chair/comfy/bravo,
+/turf/open/floor/almayer{
+	icon_state = "orangefull";
+	tag = "icon-orangefull"
+	},
+/area/almayer/living/briefing)
 "rwS" = (
 /obj/structure/machinery/light/small,
 /obj/structure/largecrate/random/case/double,
@@ -69631,7 +69652,7 @@
 	name = "ship-grade camera";
 	tag = "icon-camera (NORTH)"
 	},
-/obj/structure/blocker/forcefield/vehicles,
+/obj/structure/blocker/forcefield/multitile_vehicles,
 /obj/structure/sign/safety/stairs{
 	pixel_x = 8;
 	pixel_y = -32
@@ -71885,7 +71906,7 @@
 /obj/effect/spawner/random/toolbox,
 /obj/item/stack/sheet/metal{
 	desc = "Semiotic Standard denoting the nearby presence of coffee: the lifeblood of any starship crew.";
-	icon = 'icons/obj/structures/props/Semiotic_Standard.dmi';
+	icon = 'icons/obj/structures/props/semiotic_standard.dmi';
 	icon_state = "coffee";
 	name = "coffee semiotic";
 	pixel_x = 20;
@@ -102033,7 +102054,7 @@ btJ
 bvi
 bAn
 blJ
-blJ
+bAn
 blJ
 bAn
 bpl
@@ -104869,7 +104890,7 @@ kqv
 pcl
 gHZ
 pcl
-gHZ
+gpi
 pcl
 oJp
 bvf
@@ -106499,7 +106520,7 @@ btR
 bvo
 bAy
 blP
-blP
+bAy
 blP
 bAy
 bpq
@@ -118886,7 +118907,7 @@ uMk
 uMk
 bgO
 beH
-fGh
+bqZ
 bdg
 buH
 hOR
@@ -119089,7 +119110,7 @@ uMk
 uMk
 bgO
 beH
-fGh
+bqZ
 bdg
 buH
 hOR
@@ -119886,12 +119907,12 @@ aLG
 bdg
 bqZ
 aXc
-dqD
-dqD
+rwv
+rwv
 dRT
 dqD
 dqD
-dRT
+bUb
 dRT
 eWp
 eWp
@@ -121316,10 +121337,10 @@ moQ
 hGO
 fvf
 uNM
-gAj
-gAj
-gAj
-gAj
+xAt
+xAt
+xAt
+xAt
 nNH
 bqZ
 bdg
